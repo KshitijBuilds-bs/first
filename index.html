@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ r.name }} — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────────────────────── -->
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <h1>{{ r.name }}</h1>
+        <p class="title">{{ r.title }}</p>
+      </div>
+      <nav class="contact-list">
+        <a href="mailto:{{ r.email }}">{{ r.email }}</a>
+        <span>{{ r.phone }}</span>
+        <span>{{ r.location }}</span>
+        <a href="https://{{ r.linkedin }}" target="_blank">LinkedIn ↗</a>
+        <a href="https://{{ r.github }}" target="_blank">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── MAIN ───────────────────────────────────────────────────────────── -->
+  <main>
+
+    <!-- Summary -->
+    <section class="section" id="summary">
+      <h2 class="section-label">About</h2>
+      <p class="summary-text">{{ r.summary }}</p>
+    </section>
+
+    <hr/>
+
+    <!-- Experience -->
+    <section class="section" id="experience">
+      <h2 class="section-label">Experience</h2>
+      <div class="entries">
+        {% for job in r.experience %}
+        <article class="entry">
+          <div class="entry-header">
+            <div>
+              <span class="entry-title">{{ job.role }}</span>
+              <span class="entry-company">{{ job.company }}</span>
+            </div>
+            <div class="entry-meta">
+              <span>{{ job.period }}</span>
+              <span>{{ job.location }}</span>
+            </div>
+          </div>
+          <ul class="entry-points">
+            {% for point in job.points %}
+            <li>{{ point }}</li>
+            {% endfor %}
+          </ul>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <hr/>
+
+    <!-- Education -->
+    <section class="section" id="education">
+      <h2 class="section-label">Education</h2>
+      <div class="entries">
+        {% for edu in r.education %}
+        <article class="entry">
+          <div class="entry-header">
+            <div>
+              <span class="entry-title">{{ edu.degree }}</span>
+              <span class="entry-company">{{ edu.school }}</span>
+            </div>
+            <div class="entry-meta">
+              <span>{{ edu.period }}</span>
+              <span>{{ edu.detail }}</span>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <hr/>
+
+    <!-- Skills -->
+    <section class="section" id="skills">
+      <h2 class="section-label">Skills</h2>
+      <div class="skills-grid">
+        {% for category, items in r.skills.items() %}
+        <div class="skill-group">
+          <h3>{{ category }}</h3>
+          <div class="skill-tags">
+            {% for skill in items %}
+            <span class="tag">{{ skill }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <hr/>
+
+    <!-- Projects -->
+    <section class="section" id="projects">
+      <h2 class="section-label">Projects</h2>
+      <div class="entries">
+        {% for proj in r.projects %}
+        <article class="entry project-entry">
+          <div class="entry-header">
+            <span class="entry-title">{{ proj.name }}</span>
+            <a class="project-link" href="https://{{ proj.link }}" target="_blank">{{ proj.link }} ↗</a>
+          </div>
+          <p class="project-desc">{{ proj.description }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>{{ r.name }} · {{ r.title }}</span>
+    <span>Last updated 2026</span>
+  </footer>
+
+</body>
+</html>
